@@ -68,4 +68,7 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
 # React-Masterclass-JS-TS-
+
+<!-- setup like this npx create-react-app react-masterclass --template typescript npm i --save-dev @types/styled-components npm i styled-components -->
