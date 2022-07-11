@@ -1,3 +1,4 @@
+import { useState } from "react";
 import styled from "styled-components";
 
 interface ContainerProps {
@@ -15,21 +16,16 @@ const Container = styled.div<ContainerProps>`
 
 interface CircleProps {
   bgColor: string;
-  borderColor?: string; // '?' mean is optional
+  borderColor?: string;
   text?: string;
 }
 
-function Circle({
-  bgColor,
-  borderColor,
-  text = "this is default value",
-}: CircleProps) {
-  return (
-    <Container bgColor={bgColor} borderColor={borderColor ?? bgColor}>
-      {/* borderColor={borderColor ?? bgColor}  -> if there is no bordercolor's value , that color will be same with bgColor */}
-      {text}
-    </Container>
-  );
+function Circle({ bgColor, borderColor }: CircleProps) {
+  //   const [value, setValue] = useState<number | string>(0);  // <number | string> = it could be nuber or string
+  //   setValue(2) // typescript can guess which type will u use by the default value
+  //   setValue("hello")
+  const [value, setValue] = useState(0);
+  return <Container bgColor={bgColor} borderColor={borderColor ?? bgColor} />;
 }
 
 export default Circle;
