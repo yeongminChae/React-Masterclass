@@ -21,9 +21,6 @@ interface CircleProps {
 }
 
 function Circle({ bgColor, borderColor }: CircleProps) {
-  //   const [value, setValue] = useState<number | string>(0);  // <number | string> = it could be nuber or string
-  //   setValue(2) // typescript can guess which type will u use by the default value
-  //   setValue("hello")
   const [value, setValue] = useState(0);
   return <Container bgColor={bgColor} borderColor={borderColor ?? bgColor} />;
 }
