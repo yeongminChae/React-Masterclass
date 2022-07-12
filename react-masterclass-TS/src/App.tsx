@@ -66,7 +66,6 @@ a {
 
 function App() {
   return (
-    // Fragment <> which is component which allows to return many thing next each other without parents
     <>
       <Globalstyle />
       <Router />
