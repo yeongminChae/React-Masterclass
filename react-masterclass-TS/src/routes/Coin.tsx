@@ -25,6 +25,29 @@ const Loader = styled.span`
   display: block;
 `;
 
+const Overview = styled.div`
+  display: flex;
+  justify-content: space-between;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 10px 20px;
+  border-radius: 10px;
+`;
+
+const OverviewItem = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  span:first-child {
+    font-size: 10px;
+    font-weight: 400;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+  }
+`;
+
+const Description = styled.p`
+  margin: 20px 0px;
+`;
 interface Routeparams {
   coinId: string;
 }
@@ -34,12 +57,6 @@ interface RouteState {
 }
 
 interface InfoData {
-  // click the right button on the console.log(infoData)
-  // and press the button which is "save the object as a global variable"
-  // and write this code in console "Object.keys(temp1).join()"
-  // join is making value as a string
-  // Object.values(temp1).map(v => typeof v).join()
-  // with the map function explict types of the values
   id: string;
   name: string;
   symbol: string;
@@ -117,22 +134,47 @@ function Coin() {
       console.log(priceData);
       setInfo(infoData);
       setPriceInfo(priceData);
+      setLoading(false);
     })();
-  }, []);
+  }, [coinId]);
   return (
     <Container>
       <Header>
         <Title>{state?.name || "Loading..."}</Title>
       </Header>
-      {loading ? <Loader>Loading...</Loader> : null}
+      {loading ? (
+        <Loader>Loading...</Loader>
+      ) : (
+        <>
+          <Overview>
+            <OverviewItem>
+              <span>Rank : </span>
+              <span>{info?.rank} </span>
+            </OverviewItem>
+            <OverviewItem>
+              <span>Symbol : </span>
+              <span>{info?.symbol} </span>
+            </OverviewItem>
+            <OverviewItem>
+              <span>Open_Source : </span>
+              <span>{info?.open_source ? "yes" : "no"} </span>
+            </OverviewItem>
+          </Overview>
+          <Description>{info?.description} </Description>
+          <Overview>
+            <OverviewItem>
+              <span>Total Supply : </span>
+              <span>{priceInfo?.total_supply} </span>
+            </OverviewItem>
+            <OverviewItem>
+              <span>Max Supply : </span>
+              <span>{priceInfo?.max_supply} </span>
+            </OverviewItem>
+          </Overview>
+        </>
+      )}
     </Container>
   );
 }
 
 export default Coin;
-// coin id로 코인 받기 (Coins)
-// https://api.coinpaprika.com/v1/coins/btc-bitcoin
-// https://api.coinpaprika.com/#operation/getCoinById
-// coin id로 특정 코인에 대한 시세 정보 얻기 (Tickers)
-// https://api.coinpaprika.com/v1/tickers/btc-bitcoin
-// https://api.coinpaprika.com/#operation/getTickersById
