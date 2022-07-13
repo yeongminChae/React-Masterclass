@@ -1,6 +1,7 @@
 import { useQuery } from "react-query";
 import { fetchCoinHistory } from "./api";
 import Apexchart from "react-apexcharts";
+
 interface ChartProps {
   coinId: string;
 }
@@ -16,7 +17,7 @@ interface IHisorical {
   market_cap: number;
 }
 
-function Chart({ coinId }: ChartProps) {
+const Candlestick = ({ coinId }: ChartProps) => {
   const { isLoading, data } = useQuery<IHisorical[]>(
     ["oplcv", coinId],
     () => fetchCoinHistory(coinId),
@@ -30,7 +31,6 @@ function Chart({ coinId }: ChartProps) {
         "Loading chart"
       ) : (
         <Apexchart
-          type="line"
           series={[
             {
               name: "Price",
@@ -42,6 +42,7 @@ function Chart({ coinId }: ChartProps) {
               mode: "dark",
             },
             chart: {
+              type: "candlestick",
               height: 500,
               width: 500,
               toolbar: {
@@ -49,33 +50,16 @@ function Chart({ coinId }: ChartProps) {
               },
               background: "transparent",
             },
-            grid: {
-              show: false,
+            title: {
+              text: "CandleStick Chart",
+              align: "left",
             },
-            stroke: {
-              curve: "smooth",
-              width: 4,
-            },
-            yaxis: { show: false },
             xaxis: {
-              labels: {
-                show: false,
-                datetimeFormatter: { month: "mmm 'yy" },
-              },
-              axisTicks: { show: false },
-              axisBorder: { show: false },
               type: "datetime",
-              categories:
-                data?.map((price) => Number(price.time_close * 1000)) ?? [],
             },
-            fill: {
-              type: "gradient",
-              gradient: { gradientToColors: ["#0be881"], stops: [0, 100] },
-            },
-            colors: ["#0fbcf9"],
-            tooltip: {
-              y: {
-                formatter: (value) => `$${value.toFixed(2)}`,
+            yaxis: {
+              tooltip: {
+                enabled: true,
               },
             },
           }}
@@ -83,6 +67,6 @@ function Chart({ coinId }: ChartProps) {
       )}{" "}
     </div>
   );
-}
+};
 
-export default Chart;
+export default Candlestick;

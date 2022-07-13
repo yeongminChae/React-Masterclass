@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet";
 import { useQuery } from "react-query";
 import {
   Link,
@@ -9,6 +10,7 @@ import {
 } from "react-router-dom";
 import styled from "styled-components";
 import { fetchCoinInfo, fetchCoinTickers } from "./api";
+import Candlestick from "./Candlesticks";
 import Chart from "./Chart";
 import Price from "./Price";
 
@@ -61,7 +63,7 @@ const Description = styled.p`
 
 const Tabs = styled.div`
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 2fr);
   margin: 25px 0px;
   gap: 10px;
 `;
@@ -154,9 +156,13 @@ function Coin() {
   const { state } = useLocation<RouteState>();
   const priceMatch = useRouteMatch("/:coinId/price");
   const chartMatch = useRouteMatch("/:coinId/chart");
+  const candleMatch = useRouteMatch("/:coinId/candlestick");
   const { isLoading: infoLoading, data: infoData } = useQuery<InfoData>(
     ["info", coinId],
-    () => fetchCoinInfo(coinId)
+    () => fetchCoinInfo(coinId),
+    {
+      refetchInterval: 5000,
+    }
   );
   const { isLoading: tickersLoading, data: tickersData } = useQuery<PriceData>(
     ["tickers", coinId],
@@ -165,9 +171,23 @@ function Coin() {
   const loading = infoLoading || tickersLoading;
   return (
     <Container>
+      <Helmet>
+        <title>
+          {state?.name ? state.name : loading ? "Loading..." : infoData?.name}
+        </title>
+      </Helmet>
       <Header>
-        <Title>{state?.name || "Loading..."}</Title>
+        <Title>
+          {state?.name ? state.name : loading ? "Loading..." : infoData?.name}
+        </Title>
       </Header>
+      <Link to={"/"} style={{ padding: 10 }}>
+        <text>&larr; Home </text>
+      </Link>
+      <Link to={`/${coinId}/`}>
+        <text>&larr; Turn Off </text>
+      </Link>
+      <hr />
       {loading ? (
         <Loader>Loading...</Loader>
       ) : (
@@ -179,11 +199,11 @@ function Coin() {
             </OverviewItem>
             <OverviewItem>
               <span>Symbol : </span>
-              <span>{infoData?.symbol} </span>
+              <span>${infoData?.symbol} </span>
             </OverviewItem>
             <OverviewItem>
-              <span>Open_Source : </span>
-              <span>{infoData?.open_source ? "yes" : "no"} </span>
+              <span>Price : </span>
+              <span>${tickersData?.quotes.USD.price.toFixed(3)} </span>
             </OverviewItem>
           </Overview>
           <Description>{infoData?.description} </Description>
@@ -201,17 +221,22 @@ function Coin() {
             <Tab isActive={chartMatch !== null}>
               <Link to={`/${coinId}/chart`}>Chart</Link>
             </Tab>
+            <Tab isActive={candleMatch !== null}>
+              <Link to={`/${coinId}/candlestick`}>Candlestick Chart</Link>
+            </Tab>
             <Tab isActive={priceMatch !== null}>
               <Link to={`/${coinId}/price`}>Price</Link>
             </Tab>
           </Tabs>
-
           <Switch>
             <Route path={`/:coinId/price`}>
               <Price />
             </Route>
             <Route path={`/:coinId/chart`}>
               <Chart coinId={coinId} />
+            </Route>
+            <Route path={`/:coinId/candlestick`}>
+              <Candlestick coinId={coinId} />
             </Route>
           </Switch>
         </>
