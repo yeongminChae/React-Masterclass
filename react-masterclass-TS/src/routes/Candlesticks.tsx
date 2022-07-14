@@ -6,7 +6,7 @@ interface ChartProps {
   coinId: string;
 }
 
-interface IHisorical {
+interface IHistorical {
   time_open: number;
   time_close: number;
   open: string;
@@ -17,9 +17,14 @@ interface IHisorical {
   market_cap: number;
 }
 
+interface ICandleChartItem {
+  x: Date;
+  y: number[];
+}
+
 const Candlestick = ({ coinId }: ChartProps) => {
-  const { isLoading, data } = useQuery<IHisorical[]>(
-    ["oplcv", coinId],
+  const { isLoading, data } = useQuery<IHistorical[]>(
+    ["ohlcv", coinId],
     () => fetchCoinHistory(coinId),
     {
       refetchInterval: 10000,
@@ -28,22 +33,36 @@ const Candlestick = ({ coinId }: ChartProps) => {
   return (
     <div>
       {isLoading ? (
-        "Loading chart"
+        "Loading chart..."
       ) : (
         <Apexchart
+          type="candlestick"
           series={[
             {
               name: "Price",
-              data: data?.map((price) => Number(price.close)) ?? [],
+              data: data?.map((price) => {
+                return {
+                  x: new Date(price.time_open * 1000),
+                  y: [
+                    parseFloat(price.open),
+                    parseFloat(price.high),
+                    parseFloat(price.low),
+                    parseFloat(price.close),
+                  ],
+                };
+              }) as ICandleChartItem[],
             },
           ]}
           options={{
+            // theme: {
+            //   mode: isDark ? "dark" : "light",
+            // },
             theme: {
               mode: "dark",
             },
             chart: {
               type: "candlestick",
-              height: 500,
+              height: 350,
               width: 500,
               toolbar: {
                 show: false,
@@ -51,20 +70,46 @@ const Candlestick = ({ coinId }: ChartProps) => {
               background: "transparent",
             },
             title: {
-              text: "CandleStick Chart",
+              text: "Candlestick Chart",
               align: "left",
             },
-            xaxis: {
-              type: "datetime",
+            stroke: {
+              curve: "smooth",
+              width: 2,
             },
             yaxis: {
-              tooltip: {
-                enabled: true,
+              show: false,
+            },
+            xaxis: {
+              labels: {
+                show: false,
+                datetimeFormatter: { month: "mmm 'yy" },
+                style: {
+                  colors: "#9c88ff",
+                },
+              },
+              axisTicks: { show: false },
+              axisBorder: { show: false },
+              type: "datetime",
+              categories:
+                data?.map((price) => Number(price.time_close * 1000)) ?? [],
+            },
+            plotOptions: {
+              candlestick: {
+                colors: {
+                  upward: "#3C90EB",
+                  downward: "#DF7D46",
+                },
+              },
+            },
+            tooltip: {
+              y: {
+                formatter: (value) => `${value.toFixed(2)}$`,
               },
             },
           }}
         />
-      )}{" "}
+      )}
     </div>
   );
 };

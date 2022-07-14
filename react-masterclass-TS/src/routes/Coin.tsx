@@ -185,7 +185,7 @@ function Coin() {
         <text>&larr; Home </text>
       </Link>
       <Link to={`/${coinId}/`}>
-        <text>&larr; Turn Off </text>
+        <text>&larr; Off Graph </text>
       </Link>
       <hr />
       {loading ? (
@@ -219,7 +219,7 @@ function Coin() {
           </Overview>
           <Tabs>
             <Tab isActive={chartMatch !== null}>
-              <Link to={`/${coinId}/chart`}>Chart</Link>
+              <Link to={`/${coinId}/chart`}>Line Chart</Link>
             </Tab>
             <Tab isActive={candleMatch !== null}>
               <Link to={`/${coinId}/candlestick`}>Candlestick Chart</Link>

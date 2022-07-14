@@ -56,6 +56,10 @@ function Chart({ coinId }: ChartProps) {
               curve: "smooth",
               width: 4,
             },
+            title: {
+              text: "Line Chart (Overview) ",
+              align: "left",
+            },
             yaxis: { show: false },
             xaxis: {
               labels: {
