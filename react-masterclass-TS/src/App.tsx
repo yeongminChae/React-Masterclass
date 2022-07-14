@@ -1,6 +1,10 @@
-import { createGlobalStyle } from "styled-components";
+import styled, { createGlobalStyle, ThemeProvider } from "styled-components";
 import { ReactQueryDevtools } from "react-query/devtools";
 import Router from "./Router";
+import { DayTheme, NightTheme } from "./theme";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { themeAtom } from "./Atoms";
+import Toggle from "./routes/Toggle";
 
 const Globalstyle = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap');
@@ -65,12 +69,22 @@ a {
 }
 `;
 
+const ToggleDiv = styled.div``;
+
 function App() {
+  const whichTheme = useRecoilValue(themeAtom);
+  const setTheme = useSetRecoilState(themeAtom);
+  const toggleTheme = () => setTheme((currnet) => !currnet);
   return (
     <>
-      <Globalstyle />
-      <Router />
-      <ReactQueryDevtools initialIsOpen={true} />
+      <ThemeProvider theme={whichTheme ? NightTheme : DayTheme}>
+        <Globalstyle />
+        <ToggleDiv onClick={toggleTheme}>
+          <Toggle />
+        </ToggleDiv>
+        <Router />
+        <ReactQueryDevtools initialIsOpen={true} />
+      </ThemeProvider>
     </>
   );
 }

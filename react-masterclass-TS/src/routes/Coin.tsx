@@ -13,6 +13,10 @@ import { fetchCoinInfo, fetchCoinTickers } from "./api";
 import Candlestick from "./Candlesticks";
 import Chart from "./Chart";
 import Price from "./Price";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { themeAtom } from "../Atoms";
+import Toggle from "./Toggle";
+import { DayTheme, NightTheme } from "../theme";
 
 const Container = styled.div`
   padding: 0px 20px;
@@ -154,6 +158,9 @@ interface PriceData {
 function Coin() {
   const { coinId } = useParams<Routeparams>();
   const { state } = useLocation<RouteState>();
+  const whichTheme = useRecoilValue(themeAtom);
+  const setTheme = useSetRecoilState(themeAtom);
+  const toggleTheme = () => setTheme((currnet) => !currnet);
   const priceMatch = useRouteMatch("/:coinId/price");
   const chartMatch = useRouteMatch("/:coinId/chart");
   const candleMatch = useRouteMatch("/:coinId/candlestick");
