@@ -5,6 +5,7 @@ import { DayTheme, NightTheme } from "./theme";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { themeAtom } from "./Atoms";
 import Toggle from "./routes/Toggle";
+import { useState } from "react";
 
 const Globalstyle = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap');
@@ -72,16 +73,13 @@ a {
 const ToggleDiv = styled.div``;
 
 function App() {
-  const whichTheme = useRecoilValue(themeAtom);
-  const setTheme = useSetRecoilState(themeAtom);
-  const toggleTheme = () => setTheme((currnet) => !currnet);
+  const [isDark, setIsDark] = useState(false);
+  const toggleDark = () => setIsDark((current) => !current);
   return (
     <>
-      <ThemeProvider theme={whichTheme ? NightTheme : DayTheme}>
+      <ThemeProvider theme={isDark ? NightTheme : DayTheme}>
+        <button onClick={toggleDark}>Toggle Mode</button>
         <Globalstyle />
-        <ToggleDiv onClick={toggleTheme}>
-          <Toggle />
-        </ToggleDiv>
         <Router />
         <ReactQueryDevtools initialIsOpen={true} />
       </ThemeProvider>
