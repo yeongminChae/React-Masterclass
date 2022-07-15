@@ -26,7 +26,7 @@ const Toggle = () => {
           width={48}
         />
         <p>
-          <span className="text">{checked ? "Day☀️" : "Night🌙"}</span>
+          <span className="text">{checked ? "Bright☀️" : "Dark🌙"}</span>
         </p>
       </label>
     </div>
