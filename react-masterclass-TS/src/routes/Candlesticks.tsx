@@ -5,6 +5,7 @@ import { themeAtom } from "../Atoms";
 
 interface ChartProps {
   coinId: string;
+  isDark: boolean;
 }
 
 interface IHistorical {
@@ -23,7 +24,7 @@ interface ICandleChartItem {
   y: number[];
 }
 
-const Candlestick = ({ coinId }: ChartProps) => {
+const Candlestick = ({ coinId, isDark }: ChartProps) => {
   const { isLoading, data } = useQuery<IHistorical[]>(
     ["ohlcv", coinId],
     () => fetchCoinHistory(coinId),
@@ -56,7 +57,7 @@ const Candlestick = ({ coinId }: ChartProps) => {
           ]}
           options={{
             theme: {
-              mode: "dark",
+              mode: isDark ? "dark" : "light",
             },
             chart: {
               type: "candlestick",

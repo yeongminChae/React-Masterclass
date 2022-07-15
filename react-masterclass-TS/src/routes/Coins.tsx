@@ -24,6 +24,7 @@ const Coin = styled.li`
   color: ${(props) => props.theme.textColor};
   border-radius: 15px;
   margin-bottom: 10px;
+  border: 1px solid white;
   a {
     display: flex;
     align-items: center;
@@ -63,7 +64,11 @@ interface ICoin {
   type: string;
 }
 
-function Coins() {
+interface IRouteProps {
+  toggleDark: () => void;
+}
+
+function Coins({ toggleDark }: IRouteProps) {
   const { isLoading, data } = useQuery<ICoin[]>("allCoins", fetchCoins);
   return (
     <Container>
@@ -72,6 +77,7 @@ function Coins() {
       </Helmet>
       <Header>
         <Title>Coins</Title>
+        <button onClick={toggleDark}>Toggle Dark Mode</button>
       </Header>
       <hr />
       {isLoading ? (

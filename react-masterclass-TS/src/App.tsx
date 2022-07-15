@@ -70,17 +70,14 @@ a {
 }
 `;
 
-const ToggleDiv = styled.div``;
-
 function App() {
   const [isDark, setIsDark] = useState(false);
   const toggleDark = () => setIsDark((current) => !current);
   return (
     <>
       <ThemeProvider theme={isDark ? NightTheme : DayTheme}>
-        <button onClick={toggleDark}>Toggle Mode</button>
         <Globalstyle />
-        <Router />
+        <Router isDark={isDark} toggleDark={toggleDark} />
         <ReactQueryDevtools initialIsOpen={true} />
       </ThemeProvider>
     </>
@@ -88,3 +85,5 @@ function App() {
 }
 
 export default App;
+// the trip of isDark(state) : App -> Router -> coin -> Chart
+// make my app can aceess to isDark(state) Header -> (isDark) <- Chart
