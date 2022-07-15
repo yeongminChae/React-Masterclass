@@ -1,0 +1,1 @@
+{"version":3,"file":"static/css/main.6d69df17.css","mappings":"AAAA,SAGE,WAAY,CAIZ,aAAc,CADd,eAAgB,CADhB,cAAiB,CAHjB,iBAAkB,CADlB,OAAU,CAGV,QAIF","sources":["styles/styles.css"],"sourcesContent":[".example {\n  right: 0px;\n  position: absolute;\n  float: right;\n  top: 10px;\n  padding: 0px 20px;\n  max-width: 480px;\n  margin: 0 auto;\n}\n"],"names":[],"sourceRoot":""}

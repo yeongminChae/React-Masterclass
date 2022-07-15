@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/React-Masterclass-JS-TS-.git/static/css/main.6d69df17.css",
+    "main.js": "/React-Masterclass-JS-TS-.git/static/js/main.d2e8a135.js",
+    "index.html": "/React-Masterclass-JS-TS-.git/index.html",
+    "main.6d69df17.css.map": "/React-Masterclass-JS-TS-.git/static/css/main.6d69df17.css.map",
+    "main.d2e8a135.js.map": "/React-Masterclass-JS-TS-.git/static/js/main.d2e8a135.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.6d69df17.css",
+    "static/js/main.d2e8a135.js"
+  ]
+}
