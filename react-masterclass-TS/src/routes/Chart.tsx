@@ -59,6 +59,9 @@ function Chart({ coinId }: ChartProps) {
             title: {
               text: "Line Chart (Overview) ",
               align: "left",
+              style: {
+                color: "#54BAB9",
+              },
             },
             yaxis: { show: false },
             xaxis: {

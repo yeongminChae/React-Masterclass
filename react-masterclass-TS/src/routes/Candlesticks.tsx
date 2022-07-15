@@ -1,6 +1,7 @@
 import { useQuery } from "react-query";
 import { fetchCoinHistory } from "./api";
 import Apexchart from "react-apexcharts";
+import { themeAtom } from "../Atoms";
 
 interface ChartProps {
   coinId: string;
@@ -54,9 +55,6 @@ const Candlestick = ({ coinId }: ChartProps) => {
             },
           ]}
           options={{
-            // theme: {
-            //   mode: isDark ? "dark" : "light",
-            // },
             theme: {
               mode: "dark",
             },
@@ -72,6 +70,9 @@ const Candlestick = ({ coinId }: ChartProps) => {
             title: {
               text: "Candlestick Chart",
               align: "left",
+              style: {
+                color: "#54BAB9",
+              },
             },
             stroke: {
               curve: "smooth",

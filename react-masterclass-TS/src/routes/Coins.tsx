@@ -3,9 +3,6 @@ import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { fetchCoins } from "./api";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { themeAtom } from "../Atoms";
-// import { NavigationContainer, NavigationIcon } from "./Coin";
 
 const Container = styled.div`
   padding: 0px 20px;

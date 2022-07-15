@@ -25,10 +25,10 @@ const Toggle = () => {
           height={15}
           width={48}
         />
+        <p>
+          <span className="text">{checked ? "Day☀️" : "Night🌙"}</span>
+        </p>
       </label>
-      <p>
-        <span className="text">{checked ? "Day☀️" : "Night🌙"}</span>
-      </p>
     </div>
   );
 };
