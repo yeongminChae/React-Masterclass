@@ -1,6 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { ThemeProvider } from "styled-components";
 import { QueryClient, QueryClientProvider } from "react-query";
 import App from "./App";
 import { RecoilRoot } from "recoil";
