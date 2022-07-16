@@ -40,16 +40,26 @@ interface IForm {
   username: string;
   password: string;
   password1: string;
+  extraError: string;
 }
 function ToDoList() {
   const {
     register,
     handleSubmit,
     formState: { errors },
+    setError,
   } = useForm<IForm>({ defaultValues: { email: "@naver.com" } });
-  const onValid = (data: any) => {
-    console.log(data);
+  const onValid = (data: IForm) => {
+    if (data.password !== data.password1) {
+      setError(
+        "password1",
+        { message: "Password r not the same" },
+        { shouldFocus: true }
+      );
+    }
+    // setError("extraError", { message: "server offline" });
   };
+  console.log(errors);
   return (
     <div>
       {" "}
@@ -70,17 +80,27 @@ function ToDoList() {
         />{" "}
         <span>{errors?.email?.message}</span>{" "}
         <input
-          {...register("firstName", { required: "write here" })}
+          {...register("firstName", {
+            required: "write here",
+            validate: {
+              Nonico: (value) =>
+                value.includes("nico") ? "nico not allowed" : true,
+              NoNick: (value) =>
+                value.includes("nick") ? "nick not allowed" : true,
+            },
+          })}
           placeholder="First Name"
         />{" "}
         <span>{errors?.firstName?.message}</span>{" "}
         <input
-          {...register("lastName", { required: "write here" })}
+          {...register("lastName", {
+            required: "write here",
+          })}
           placeholder="Last Name"
         />{" "}
         <span>{errors?.lastName?.message}</span>{" "}
         <input
-          {...register("username", { required: "write here", minLength: 10 })}
+          {...register("username", { required: "write here", minLength: 5 })}
           placeholder="Username"
         />{" "}
         <span>{errors?.username?.message}</span>{" "}
@@ -96,7 +116,8 @@ function ToDoList() {
           })}
           placeholder="Password1"
         />{" "}
-        <span>{errors?.password1?.message}</span> <button>Add</button>{" "}
+        <span>{errors?.password1?.message}</span>
+        <button>Add</button> <span>{errors?.extraError?.message}</span>
       </form>{" "}
     </div>
   );
