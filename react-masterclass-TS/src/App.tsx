@@ -1,11 +1,5 @@
-import styled, { createGlobalStyle, ThemeProvider } from "styled-components";
-import { ReactQueryDevtools } from "react-query/devtools";
-import Router from "./Router";
-import { DayTheme, NightTheme } from "./theme";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { themeAtom } from "./Atoms";
-import Toggle from "./routes/Toggle";
-import { useState } from "react";
+import styled, { createGlobalStyle } from "styled-components";
+import ToDoList from "./ToDoList";
 
 const Globalstyle = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap');
@@ -71,18 +65,12 @@ a {
 `;
 
 function App() {
-  const isDark = useRecoilValue(themeAtom);
   return (
     <>
-      <ThemeProvider theme={isDark ? NightTheme : DayTheme}>
-        <Globalstyle />
-        <Router />
-        <ReactQueryDevtools initialIsOpen={true} />
-      </ThemeProvider>
+      <Globalstyle />
+      <ToDoList />
     </>
   );
 }
 
 export default App;
-// the trip of isDark(state) : App -> Router -> coin -> Chart
-// make my app can aceess to isDark(state) Header -> (isDark) <- Chart
