@@ -2,19 +2,6 @@ import React from "react";
 import { useSetRecoilState } from "recoil";
 import { IToDo, toDoState } from "../atoms";
 
-// How do we change elements in the List ?
-// const food = ["pizza","mango","kimchi","kimbap"]
-// i want to replace mango into "감"
-// const front = ["pizza"]
-// const back = ["kimchi","kimbap"]
-// const final = [...front,"감",...back]
-
-// const food = ["pizza","mango","kimchi","kimbap"]
-// => ["pizza","mango","kimchi","kimbap"]
-// const target = 1
-// [...food.slice(0,target), "감" , ...food.slice(target+1)]
-// => (4) ['pizza', '감', 'kimchi', 'kimbap']
-
 function ToDo({ text, category, id }: IToDo) {
   const setToDos = useSetRecoilState(toDoState);
   const onClick = (event: React.MouseEvent<HTMLButtonElement>) => {
