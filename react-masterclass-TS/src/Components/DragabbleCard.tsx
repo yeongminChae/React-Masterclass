@@ -30,6 +30,4 @@ function DragableCard({ toDo, index }: IDraggableCardProps) {
   );
 }
 
-// export default DragableCard;
 export default React.memo(DragableCard);
-// react.memo -> it makes React do not rerender this component

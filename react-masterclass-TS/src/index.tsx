@@ -17,11 +17,9 @@ const root = ReactDOM.createRoot(
 );
 
 root.render(
-  // <React.StrictMode>
   <RecoilRoot>
     <ThemeProvider theme={darkTheme}>
       <GlobalStyle /> <App />{" "}
     </ThemeProvider>{" "}
   </RecoilRoot>
-  // </React.StrictMode> Bc of this my component print twice in my console
 );
