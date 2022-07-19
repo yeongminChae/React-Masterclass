@@ -28,3 +28,16 @@ export const toDoSelector = selector({
     return toDos.filter((toDo) => toDo.category === category);
   },
 });
+export interface ICategory {
+  addCategory: string;
+}
+export interface ICategories {
+  text: string;
+  id: number;
+  category: string;
+}
+export const categoriesState = atom<ICategories[]>({
+  key: "categories",
+  default: [],
+  effects_UNSTABLE: [persistAtom],
+});

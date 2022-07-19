@@ -4,6 +4,7 @@ import App from "./App";
 import { RecoilRoot } from "recoil";
 import { ThemeProvider } from "styled-components";
 import { darkTheme } from "./theme";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const queryClient = new QueryClient();
 
