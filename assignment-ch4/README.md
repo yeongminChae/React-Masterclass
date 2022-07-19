@@ -48,3 +48,4 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 / : All coins
 /:id : /btc -> coin detail  
 / nested url -> /bitcoin/info & /bitcoin/chart
+# React-Masterclass-assignment-Day2-
