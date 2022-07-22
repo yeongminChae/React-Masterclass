@@ -1,13 +1,12 @@
-import { AnimatePresence, motion } from "framer-motion";
-import { useState } from "react";
 import { useQuery } from "react-query";
 import styled from "styled-components";
-import { string } from "yargs";
+import { motion, AnimatePresence } from "framer-motion";
 import { getMovies, IGetMoviesResult } from "../Api";
-import { makeImgPath } from "./utils";
+import { makeImgPath } from "../utils";
+import { useState } from "react";
 
 const Wrapper = styled.div`
-  background-color: black;
+  background: black;
   padding-bottom: 200px;
 `;
 
@@ -31,7 +30,7 @@ const Banner = styled.div<{ bgPhoto: string }>`
 
 const Title = styled.h2`
   font-size: 68px;
-  margin-bottom: 20px;
+  margin-bottom: 20px; ;
 `;
 
 const Overview = styled.p`
@@ -59,21 +58,36 @@ const Box = styled(motion.div)<{ bgPhoto: string }>`
   background-position: center center;
   height: 200px;
   font-size: 66px;
+  &:first-child {
+    transform-origin: center left;
+  }
+  &:last-child {
+    transform-origin: center right;
+  }
 `;
 
 const rowVariants = {
-  hidden: {
-    x: window.outerWidth + 5,
-  },
-  visible: {
-    x: 0,
-  },
-  exit: {
-    x: -window.outerWidth - 5,
-  },
+  hidden: { x: window.outerWidth + 5 },
+  visible: { x: 0 },
+  exit: { x: -window.outerWidth - 5 },
 };
 
 const offset = 6;
+
+const BoxVariants = {
+  narmal: {
+    scale: 1,
+  },
+  hover: {
+    scale: 1.3,
+    y: 10,
+    transition: {
+      delay: 0.2,
+      duration: 0.3,
+      type: "tween",
+    },
+  },
+};
 
 function Home() {
   const { data, isLoading } = useQuery<IGetMoviesResult>(
@@ -82,7 +96,7 @@ function Home() {
   );
   const [index, setIndex] = useState(0);
   const [leaving, setLeaving] = useState(false);
-  const increaseIndex = () => {
+  const incraseIndex = () => {
     if (data) {
       if (leaving) return;
       toggleLeaving();
@@ -92,46 +106,54 @@ function Home() {
     }
   };
   const toggleLeaving = () => setLeaving((prev) => !prev);
-
   return (
     <Wrapper>
+      {" "}
       {isLoading ? (
         <Loader>Loading...</Loader>
       ) : (
         <>
+          {" "}
           <Banner
-            onClick={increaseIndex}
+            onClick={incraseIndex}
             bgPhoto={makeImgPath(data?.results[0].backdrop_path || "")}
           >
-            <Title>{data?.results[0].title} </Title>
-            <Overview>{data?.results[0].overview}</Overview>
-          </Banner>
+            {" "}
+            <Title>{data?.results[0].title}</Title>{" "}
+            <Overview>{data?.results[0].overview}</Overview>{" "}
+          </Banner>{" "}
           <Slider>
+            {" "}
             <AnimatePresence initial={false} onExitComplete={toggleLeaving}>
+              {" "}
               <Row
-                key={index}
                 variants={rowVariants}
                 initial="hidden"
                 animate="visible"
-                transition={{ type: "tween", duration: 1 }}
                 exit="exit"
+                transition={{ type: "tween", duration: 1 }}
+                key={index}
               >
+                {" "}
                 {data?.results
                   .slice(1)
-                  .slice(offset * index, offset * index + offset) // pagination of movie
+                  .slice(offset * index, offset * index + offset)
                   .map((movie) => (
                     <Box
                       key={movie.id}
+                      whileHover="hover"
+                      initial="normal"
+                      variants={BoxVariants}
+                      transition={{ type: "tween" }}
                       bgPhoto={makeImgPath(movie.backdrop_path, "w500")}
-                    ></Box>
-                  ))}
-              </Row>
-            </AnimatePresence>
-          </Slider>
+                    />
+                  ))}{" "}
+              </Row>{" "}
+            </AnimatePresence>{" "}
+          </Slider>{" "}
         </>
-      )}
+      )}{" "}
     </Wrapper>
   );
 }
-
 export default Home;
