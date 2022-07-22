@@ -66,6 +66,19 @@ const Box = styled(motion.div)<{ bgPhoto: string }>`
   }
 `;
 
+const Info = styled(motion.div)`
+  padding: 20px;
+  opacity: 0;
+  background-color: ${(props) => props.theme.black.lighter};
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  h4 {
+    text-align: center;
+    font-size: 18px;
+  }
+`;
+
 const rowVariants = {
   hidden: { x: window.outerWidth + 5 },
   visible: { x: 0 },
@@ -74,13 +87,24 @@ const rowVariants = {
 
 const offset = 6;
 
+const infoVariants = {
+  hover: {
+    opacity: 1,
+    transition: {
+      delay: 0.2,
+      duration: 0.3,
+      type: "tween",
+    },
+  },
+};
+
 const BoxVariants = {
   narmal: {
     scale: 1,
   },
   hover: {
     scale: 1.3,
-    y: 10,
+    y: -80,
     transition: {
       delay: 0.2,
       duration: 0.3,
@@ -108,24 +132,19 @@ function Home() {
   const toggleLeaving = () => setLeaving((prev) => !prev);
   return (
     <Wrapper>
-      {" "}
       {isLoading ? (
         <Loader>Loading...</Loader>
       ) : (
         <>
-          {" "}
           <Banner
             onClick={incraseIndex}
             bgPhoto={makeImgPath(data?.results[0].backdrop_path || "")}
           >
-            {" "}
-            <Title>{data?.results[0].title}</Title>{" "}
-            <Overview>{data?.results[0].overview}</Overview>{" "}
-          </Banner>{" "}
+            <Title>{data?.results[0].title}</Title>
+            <Overview>{data?.results[0].overview}</Overview>
+          </Banner>
           <Slider>
-            {" "}
             <AnimatePresence initial={false} onExitComplete={toggleLeaving}>
-              {" "}
               <Row
                 variants={rowVariants}
                 initial="hidden"
@@ -134,7 +153,6 @@ function Home() {
                 transition={{ type: "tween", duration: 1 }}
                 key={index}
               >
-                {" "}
                 {data?.results
                   .slice(1)
                   .slice(offset * index, offset * index + offset)
@@ -146,13 +164,18 @@ function Home() {
                       variants={BoxVariants}
                       transition={{ type: "tween" }}
                       bgPhoto={makeImgPath(movie.backdrop_path, "w500")}
-                    />
-                  ))}{" "}
-              </Row>{" "}
-            </AnimatePresence>{" "}
-          </Slider>{" "}
+                    >
+                      {/* <img />  move bgphoto to here */}
+                      <Info variants={infoVariants}>
+                        <h4>{movie.title} </h4>
+                      </Info>
+                    </Box>
+                  ))}
+              </Row>
+            </AnimatePresence>
+          </Slider>
         </>
-      )}{" "}
+      )}
     </Wrapper>
   );
 }
